@@ -4,6 +4,7 @@ import { validateSignup } from '../utils/validation';
 import {
   sendCreated,
   sendBadRequest,
+  sendConflict,
   sendInternalError,
 } from '../utils/response';
 import { SignupBody } from '../types/index';
@@ -27,7 +28,7 @@ export async function signup(req: Request, res: Response): Promise<void> {
       signupBody.email.toLowerCase().trim(),
     );
     if (existing) {
-      sendBadRequest(res, 'This email already exists');
+      sendConflict(res, 'This email is already exist');
       return;
     }
 
