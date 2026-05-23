@@ -1,33 +1,20 @@
-import express, { Express, Request, Response } from 'express';
-import cors from 'cors';
 import dotenv from 'dotenv';
-
 dotenv.config();
 
-const app: Express = express();
-const port = process.env.PORT || 3000;
+import app from './app';
 
+const PORT = parseInt(process.env.PORT ?? '3000', 10);
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+async function bootstrap(): Promise<void> {
+  try {
+    app.listen(PORT, () => {
+      console.log(`DevPulse API running on http://localhost:${PORT}`);
+      console.log(`    Environment: ${process.env.NODE_ENV ?? 'development'}`);
+    });
+  } catch (error) {
+    console.error('Fatal: failed to start server', error);
+    process.exit(1);
+  }
+}
 
-
-
-// Routes
-app.get('/', (req: Request, res: Response) => {
-  res.json({
-    message: 'Welcome to DevPulse API',
-    status: 'running',
-  });
-});
-
-
-app.get('/users', (req: Request, res: Response) => {
-  res.json({ status: 'OK' });
-});
-
-// Start server
-app.listen(port, () => {
-  console.log(`DevPulse server is running on http://localhost:${port}`);
-});
+bootstrap();
