@@ -9,13 +9,6 @@ export function isValidRole(role: string): role is UserRole {
   return role === 'contributor' || role === 'maintainer';
 }
 
-export function isValidIssueType(type: string): type is IssueType {
-  return type === 'bug' || type === 'feature_request';
-}
-
-export function isValidIssueStatus(status: string): status is IssueStatus {
-  return status === 'open' || status === 'in_progress' || status === 'resolved';
-}
 
 // Signup Validation
 
@@ -45,6 +38,22 @@ export function validateSignup(body: Record<string, unknown>): ValidationResult 
     if (typeof body.role !== 'string' || !isValidRole(body.role)) {
       errors.push("role must be either 'contributor' or 'maintainer'");
     }
+  }
+
+  return { valid: errors.length === 0, errors };
+}
+
+// Login Validation
+
+export function validateLogin(body: Record<string, unknown>): ValidationResult {
+  const errors: string[] = [];
+
+  if (!body.email || typeof body.email !== 'string') {
+    errors.push('email is required');
+  }
+
+  if (!body.password || typeof body.password !== 'string') {
+    errors.push('password is required');
   }
 
   return { valid: errors.length === 0, errors };
