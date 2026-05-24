@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import authRoutes from './router/auth.routes';
+import issuesRoutes from './router/issues.routes';
 import { errorHandler } from './middleware/errorHandler';
 
 dotenv.config();
@@ -33,6 +34,7 @@ app.get('/health', (_req, res) => {
 // API Routes
 
 app.use('/api/auth', authRoutes);
+app.use('/api/issues', issuesRoutes);
 
 
 // ─── 404 Handler

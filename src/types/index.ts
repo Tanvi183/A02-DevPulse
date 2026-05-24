@@ -40,3 +40,50 @@ export interface JwtPayload {
   iat?: number;
   exp?: number;
 }
+
+
+export interface ReporterInfo {
+  id: number;
+  name: string;
+  role: UserRole;
+}
+
+export type IssueType = 'bug' | 'feature_request';
+export type IssueStatus = 'open' | 'in_progress' | 'resolved';
+
+export interface Issue {
+  id: number;
+  title: string;
+  description: string;
+  type: IssueType;
+  status: IssueStatus;
+  reporter_id: number;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface IssueWithReporter extends Omit<Issue, 'reporter_id'> {
+  reporter: ReporterInfo;
+}
+
+export interface CreateIssueBody {
+  title: string;
+  description: string;
+  type: IssueType;
+}
+
+export interface UpdateIssueBody {
+  title?: string;
+  description?: string;
+  type?: IssueType;
+}
+
+export interface UpdateIssueStatusBody {
+  status: IssueStatus;
+}
+
+export interface IssueQueryParams {
+  sort?: 'newest' | 'oldest';
+  type?: IssueType;
+  status?: IssueStatus;
+}
