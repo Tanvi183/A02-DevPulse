@@ -25,9 +25,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-//  Health Check
+// Check
 
-app.get('/health', (_req, res) => {
+app.get('/', (_req, res) => {
   res.status(200).json({ success: true, message: 'Server is running' });
 });
 
