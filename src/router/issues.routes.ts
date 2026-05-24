@@ -11,17 +11,16 @@ import {
 
 const router = Router();
 
-// Public routes
+
 router.get('/', getAllIssues);
 router.get('/:id', getSingleIssue);
 
-// Authenticated routes (contributor + maintainer)
+
 router.post('/', authenticate, createIssue);
 
-// Authenticated routes with logic handled in controller
 router.patch('/:id', authenticate, updateIssue);
 
-// Maintainer-only routes
+
 router.patch('/:id/status', authenticate, requireRole('maintainer'), updateIssueStatus);
 router.delete('/:id', authenticate, requireRole('maintainer'), deleteIssue);
 

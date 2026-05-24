@@ -2,14 +2,17 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import app from './app';
+import { initializeDatabase } from './config/schema';
 
 const PORT = parseInt(process.env.PORT ?? '3000', 10);
 
 async function bootstrap(): Promise<void> {
   try {
+    await initializeDatabase();
+
     app.listen(PORT, () => {
       console.log(`DevPulse API running on http://localhost:${PORT}`);
-      console.log(`    Environment: ${process.env.NODE_ENV ?? 'development'}`);
+      console.log(`Environment: ${process.env.NODE_ENV ?? 'development'}`);
     });
   } catch (error) {
     console.error('Fatal: failed to start server', error);

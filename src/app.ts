@@ -37,14 +37,14 @@ app.use('/api/auth', authRoutes);
 app.use('/api/issues', issuesRoutes);
 
 
-// ─── 404 Handler
+// 404 Handler
 
 app.use((_req, res) => {
   res.status(404).json({ success: false, message: 'Route not found' });
 });
 
 
-//  Centralized Error Handler
+// Error Handler
 
 app.use(errorHandler);
 

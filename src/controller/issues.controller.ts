@@ -31,7 +31,6 @@ export async function createIssue(req: Request, res: Response): Promise<void> {
       return;
     }
 
-    // reporter_id comes from the decoded JWT – never from the request body
     const reporterId = req.user!.id;
     const issue = await IssuesService.createIssue(body as unknown as CreateIssueBody, reporterId);
     sendCreated(res, issue, 'Issue created successfully');
@@ -40,6 +39,7 @@ export async function createIssue(req: Request, res: Response): Promise<void> {
     sendInternalError(res, 'Failed to create issue');
   }
 }
+
 
 //  GET
 
@@ -77,6 +77,7 @@ export async function getAllIssues(req: Request, res: Response): Promise<void> {
   }
 }
 
+
 // GET 
 
 export async function getSingleIssue(req: Request, res: Response): Promise<void> {
@@ -99,6 +100,7 @@ export async function getSingleIssue(req: Request, res: Response): Promise<void>
     sendInternalError(res, 'Failed to retrieve issue');
   }
 }
+
 
 // PATCH 
 
@@ -127,7 +129,6 @@ export async function updateIssue(req: Request, res: Response): Promise<void> {
     const { id: userId, role } = req.user!;
 
     if (role === 'contributor') {
-      // Contributors can only edit their own open issues
       if (existing.reporter_id !== userId) {
         sendForbidden(res, 'You can only edit your own issues');
         return;
@@ -137,7 +138,7 @@ export async function updateIssue(req: Request, res: Response): Promise<void> {
         return;
       }
     }
-    // maintainers can update any issue
+    
 
     const updated = await IssuesService.updateIssue(id, body as unknown as UpdateIssueBody);
     sendSuccess(res, updated, 'Issue updated successfully');
@@ -146,6 +147,7 @@ export async function updateIssue(req: Request, res: Response): Promise<void> {
     sendInternalError(res, 'Failed to update issue');
   }
 }
+
 
 // PATCH 
 
@@ -176,6 +178,7 @@ export async function updateIssueStatus(req: Request, res: Response): Promise<vo
     sendInternalError(res, 'Failed to update issue status');
   }
 }
+
 
 // DELETE
 

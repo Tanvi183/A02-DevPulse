@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
-// Centralized error handler – must have 4 params so Express recognises it
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 export function errorHandler(
   err: Error,
   _req: Request,
