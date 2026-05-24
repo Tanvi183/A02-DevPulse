@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 
 import authRoutes from './router/auth.routes';
 import issuesRoutes from './router/issues.routes';
+import metricsRoutes from './router/metrics.routes';
 import { errorHandler } from './middleware/errorHandler';
 
 dotenv.config();
@@ -35,6 +36,7 @@ app.get('/health', (_req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/issues', issuesRoutes);
+app.use('/api/metrics', metricsRoutes);
 
 
 // 404 Handler

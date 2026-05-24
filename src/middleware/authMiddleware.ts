@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken } from '../utils/jwt';
-import { sendUnauthorized } from '../utils/response';
+import { sendUnauthorized, sendForbidden } from '../utils/response';
 import { UserRole } from '../types';
 
 
@@ -38,9 +38,7 @@ export function requireRole(...roles: UserRole[]) {
     }
 
     if (!roles.includes(req.user.role)) {
-      import('../utils/response').then(({ sendForbidden }) => {
-        sendForbidden(res, 'You do not have permission to perform this action');
-      });
+      sendForbidden(res, 'You do not have permission to perform this action');
       return;
     }
 
